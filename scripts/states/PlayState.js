@@ -31,10 +31,10 @@ PlayState.prototype = {
 
         game.currentCheckpoint = 0;
         game.currentLap = 1;
-        game.laps = 2;
+        game.laps = 1;
         this.labels = new Labels(game, this.map);
 
-        game.timer = game.time.events.loop(10, this.timerFormat);
+        game.timer = game.time.events.loop(10, this.timerFormat, this);
         game.raceTime = 0;
 
     },
@@ -79,11 +79,21 @@ PlayState.prototype = {
         this.labels.finish.fixedToCamera = true;
         this.labels.finish.setShadow(0, 0, 'rgba(0,0,0,0.5)', 15);
 
+        this.labels.score = game.add.text(game.width / 2, 400, this.lables.timer.text, {
+            font: "48px Comic Sans MS",
+            fill: "#ffffff",
+            align: "center"
+        });
+        this.labels.score.anchor.x = 0.5;
+        this.labels.score.fixedToCamera = true;
+        this.labels.score.setShadow(0, 0, 'rgba(0,0,0,0.5)', 15);
+
         this.labels.laps.visible = false;
         this.labels.checkpoints.visible = false;
         this.labels.timer.visible = false;
 
-        game.paused = true;
+        game.time.events.remove(this.timer);
+        // game.paused = true;
     },
     update: function () {
         this.car.controlCar();
