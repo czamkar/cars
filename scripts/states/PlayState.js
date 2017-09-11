@@ -4,7 +4,6 @@ var PlayState = function (game) {
 
 PlayState.prototype = {
     preload: function () {
-
         game.load.image('car', 'assets/images/car5_blue.png');
         game.load.image('bg', 'assets/images/bg.png');
         game.load.image('tiles', 'assets/images/tiles.png');
@@ -13,9 +12,6 @@ PlayState.prototype = {
     },
     create: function () {
         game.physics.startSystem(Phaser.Physics.Arcade);
-
-        this.boom = game.add.audio('boom');
-        this.win = game.add.audio('win');
 
         this.map = new Map(game);
         this.map.createMap();
@@ -103,6 +99,7 @@ PlayState.prototype = {
         this.checkIfTileIsCheckpoint(this.map.mapLayers['road'].getTileX(this.car.sprite.x), this.map.mapLayers['road'].getTileY(this.car.sprite.y));
     },
     render: function () {
+        /*
         game.debug.spriteInfo(this.car.sprite, 32, 32);
         game.debug.body(this.car.sprite);
         game.debug.text('angularVelocity ' + this.car.sprite.body.angularVelocity, 32, 148);
@@ -110,6 +107,6 @@ PlayState.prototype = {
         game.debug.text('Acceleration ' + this.car.sprite.body.angularAcceleration, 32, 188);
         game.debug.text('Velocity ' + this.car.sprite.body.velocity, 32, 208);
         game.debug.text('currentspeed ' + this.car.currentSpeed, 32, 228);
-
+        */
     }
 }

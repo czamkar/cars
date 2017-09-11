@@ -31,7 +31,7 @@ Car.prototype.controlCar = function () {
         this.sprite.body.angularVelocity = 0;
         this.sprite.body.angularAcceleration = 0;
     }
-    
+
     if (this.cursors.up.isDown) {
         this.currentSpeed += 5;
     } else if (this.cursors.down.isDown) {
@@ -43,17 +43,19 @@ Car.prototype.controlCar = function () {
     } else {
         if (this.currentSpeed > 0) {
             this.currentSpeed -= 5;
+        } else if (this.currentSpeed < 0) {
+            this.currentSpeed += 5;
         }
 
     }
     if (this.currentSpeed >= this.maxSpeed) {
         this.currentSpeed = this.maxSpeed;
-    }else if(this.currentSpeed <= -(this.maxSpeed/2)){
-        this.currentSpeed = -(this.maxSpeed/2);
+    } else if (this.currentSpeed <= -(this.maxSpeed / 2)) {
+        this.currentSpeed = -(this.maxSpeed / 2);
     }
 
 
-    
+
 
     this.sprite.body.velocity.copyFrom(game.physics.arcade.velocityFromRotation(this.sprite.rotation, this.currentSpeed, this.sprite.body.acceleration));
 
@@ -71,8 +73,8 @@ Car.prototype.onGrass = function (map) {
         } else if (this.currentSpeed < -100) {
             this.currentSpeed += 20;
         }
-        
 
-        
+
+
     }
 }
