@@ -4,14 +4,9 @@ var PlayState = function (game) {
 
 PlayState.prototype = {
     preload: function () {
-        // Tu ładujemy assety
-        // game.load.atlas('assets', 'assets/images/spritesheet.png', 'assets/images/sprites.json', Phaser.Loader.TEXTURE_ATLAS_JSON_ARRAY);
-        // game.load.image('background', 'assets/images/bg.png');
-        game.load.image('car', 'assets/images/car5_blue.png');
-        game.load.spritesheet('kaboom', 'assets/images/explode.png', 128, 128);
-        game.load.audio('boom', 'assets/sounds/ChunkyExplosion.mp3');
-        game.load.audio('win', 'assets/sounds/Won.wav');
 
+        game.load.image('car', 'assets/images/car5_blue.png');
+        game.load.image('bg', 'assets/images/bg.png');
         game.load.image('tiles', 'assets/images/tiles.png');
         game.load.tilemap('map', 'assets/maps/map.json', null, Phaser.Tilemap.TILED_JSON);
 
@@ -26,8 +21,10 @@ PlayState.prototype = {
         this.map.createMap();
         this.car = new Car(game.width / 2, game.height / 2, game);
 
-
         // Różne
+        this.background = game.add.sprite(0, 0, 'bg');
+        this.background.fixedToCamera = true;
+        this.background.visible = false;
 
         game.currentCheckpoint = 0;
         game.currentLap = 1;
@@ -70,6 +67,8 @@ PlayState.prototype = {
         }
     },
     finish: function () {
+        this.background.visible = true;
+
         this.labels.finish = game.add.text(game.width / 2, 300, "FINISH!", {
             font: "72px Comic Sans MS",
             fill: "#ffffff",
@@ -79,7 +78,7 @@ PlayState.prototype = {
         this.labels.finish.fixedToCamera = true;
         this.labels.finish.setShadow(0, 0, 'rgba(0,0,0,0.5)', 15);
 
-        this.labels.score = game.add.text(game.width / 2, 400, this.lables.timer.text, {
+        this.labels.score = game.add.text(game.width / 2, 400, this.labels.timer.text, {
             font: "48px Comic Sans MS",
             fill: "#ffffff",
             align: "center"
@@ -92,8 +91,8 @@ PlayState.prototype = {
         this.labels.checkpoints.visible = false;
         this.labels.timer.visible = false;
 
-        game.time.events.remove(this.timer);
-        // game.paused = true;
+        game.time.events.remove(game.timer);
+        game.paused = true;
     },
     update: function () {
         this.car.controlCar();
@@ -106,7 +105,11 @@ PlayState.prototype = {
     render: function () {
         game.debug.spriteInfo(this.car.sprite, 32, 32);
         game.debug.body(this.car.sprite);
-
+        game.debug.text('angularVelocity ' + this.car.sprite.body.angularVelocity, 32, 148);
+        game.debug.text('angularAcceleration ' + this.car.sprite.body.angularAcceleration, 32, 168);
+        game.debug.text('Acceleration ' + this.car.sprite.body.angularAcceleration, 32, 188);
+        game.debug.text('Velocity ' + this.car.sprite.body.velocity, 32, 208);
+        game.debug.text('currentspeed ' + this.car.currentSpeed, 32, 228);
 
     }
 }
